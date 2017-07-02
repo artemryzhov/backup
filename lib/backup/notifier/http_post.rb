@@ -64,6 +64,9 @@ module Backup
       # This is provided (via Excon), but may be specified if needed.
       attr_accessor :ssl_ca_file
 
+
+      attr_accessor :post_field_name
+
       def initialize(model, &block)
         super
         instance_eval(&block) if block_given?
@@ -99,7 +102,7 @@ module Backup
           headers: { "User-Agent" => "Backup/#{VERSION}" }
             .merge(headers).reject { |_, value| value.nil? }
             .merge("Content-Type" => "application/x-www-form-urlencoded"),
-          body: URI.encode_www_form({ "message" => msg }
+          body: URI.encode_www_form({ post_field_name.to_s => msg }
               .merge(params).reject { |_, value| value.nil? }
               .merge("status" => status.to_s)),
           expects: success_codes # raise error if unsuccessful
