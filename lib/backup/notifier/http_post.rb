@@ -66,6 +66,8 @@ module Backup
       # This is provided (via Excon), but may be specified if needed.
       attr_accessor :ssl_ca_file
 
+      attr_accessor :message_field
+
       def initialize(model, &block)
         super
         instance_eval(&block) if block_given?
@@ -101,7 +103,7 @@ module Backup
           :headers => { 'User-Agent' => "Backup/#{ VERSION }" }.
               merge(headers).reject {|k,v| v.nil? }.
               merge('Content-Type' => 'application/x-www-form-urlencoded'),
-          :body => URI.encode_www_form({ 'message' => msg }.
+          :body => URI.encode_www_form({ message_field.to_s => msg }.
               merge(params).reject {|k,v| v.nil? }.
               merge('status' => status.to_s)),
           :expects => success_codes # raise error if unsuccessful
