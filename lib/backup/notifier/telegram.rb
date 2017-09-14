@@ -22,6 +22,10 @@ module Backup
       # Unique identifier for the target chat or username of the target channel (in the format @channelusername)
       attr_accessor :chat_id
 
+      ##
+      # Sends the message silently. Users will receive a notification with no sound.
+      attr_accessor :disable_notification
+
       def initialize(model, &block)
         super
         instance_eval(&block) if block_given?
@@ -54,6 +58,7 @@ module Backup
         uri = "https://api.telegram.org/bot#{ bot_token }/sendMessage"
         data = {
             :chat_id  => chat_id,
+            :disable_notification => disable_notification,
             :text     => message
         }
         options = {
