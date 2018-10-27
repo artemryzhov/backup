@@ -120,6 +120,7 @@ module Backup
     autoload :Ses,       File.join(NOTIFIER_PATH, 'ses')
     autoload :Command,   File.join(NOTIFIER_PATH, 'command')
     autoload :Telegram,  File.join(NOTIFIER_PATH, 'telegram')
+    autoload :Graphite,  File.join(NOTIFIER_PATH, 'graphite')
   end
 
   ##
