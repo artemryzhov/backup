@@ -12,12 +12,12 @@ module Backup
       private
 
       def notify!(status)
-        send_message(message.call(model, :status => status_data_for(status)))
+        send_message()
       end
 
-      def send_message(message)
+      def send_message()
         socket = TCPSocket.new(host, port)
-        socket.write("backups.#{trigger} #{exit_status} #{Time.now.to_i.to_s}\n")
+        socket.write("backups.#{model.trigger} #{model.exit_status} #{Time.now.to_i.to_s}\n")
         socket.close
       end
 
